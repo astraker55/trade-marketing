@@ -35,6 +35,15 @@ func (server *Server) Init(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName 
 
 }
 
+// InitRoutes ...
+func (server *Server) InitRoutes() {
+
+	server.Router.HandleFunc("/", server.Home).Methods("GET")
+	server.Router.HandleFunc("/savestat", server.SaveStatHandler).Methods("POST")
+	server.Router.HandleFunc("/getstat", server.GetStatHandler(server.DB)).Methods("GET")
+	server.Router.HandleFunc("/dropstat", server.DropStatHandler)
+}
+
 // Run is a launch function
 func (server *Server) Run(addr string) {
 	fmt.Println("Listening to port 8080")
